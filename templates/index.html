@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #e04f01;
+            color: white;
+        }
+        .party-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 10px;
+            margin: 20px 0;
+            height: 70vh;
+        }
+        .party-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 100%; /* Ensure full height usage */
+        }
+        .party-item h3, .vote-button {
+            margin: 0;
+        }
+        .vote-button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .vote-button:hover {
+            background-color: #0056b3;
+        }
+        .vote-results {
+            margin: 20px 0;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .vote-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .vote-controls button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .vote-controls button.minus {
+            background-color: #dc3545;
+        }
+        .vote-controls button:hover {
+            opacity: 0.9;
+        }
+        .total-votes {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PRAGATHI</h1>
+    </div>
+    <div class="container">
+        <!-- Party Voting Section -->
+        <form method="POST" action="/">
+            <div class="party-list">
+                {% for party in parties %}
+                <div class="party-item">
+                    <h3>{{ party }}</h3>
+                    <button class="vote-button" type="submit" name="party" value="{{ party }}">Vote</button>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <div class="vote-results">
+            <h2>Current Results</h2>
+            {% for party, vote_count in votes.items() %}
+            <div class="result-item">
+                <div>{{ party }}: {{ vote_count }} votes</div>
+                <form method="POST" action="/update_vote" class="vote-controls">
+                    <button class="minus" name="party" value="{{ party }}-decrease">-</button>
+                    <button name="party" value="{{ party }}-increase">+</button>
+                </form>
+            </div>
+            {% endfor %}
+            <div class="total-votes">
+                Total Votes: {{ total_votes }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
