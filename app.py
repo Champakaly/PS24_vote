@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 # List of parties
-parties = ["Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H"]
+parties = ["Team Smooth Operators", "Maveric", "Crusaders", "Expandables", "Parkit4U", "Team Quantum", "Nah, I’d Win", "Eco Visionaries", "Three-X"]
 
 # Dictionary to store votes
 votes = {party: 0 for party in parties}
